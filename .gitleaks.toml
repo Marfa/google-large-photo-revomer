@@ -1,0 +1,9 @@
+title = "google-large-photo-revomer"
+
+[allowlist]
+paths = [
+  '''node_modules/''',
+  '''\.auth/''',
+  '''downloads/''',
+  '''\.cursor/''',
+]

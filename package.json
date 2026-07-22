@@ -1,0 +1,34 @@
+{
+  "name": "google-large-photos-cli",
+  "version": "1.0.0",
+  "description": "CLI to count, download, or delete large Google Photos via one.google.com",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "google-large-photos": "./src/cli.js"
+  },
+  "scripts": {
+    "start": "node src/cli.js",
+    "login": "node src/cli.js login",
+    "count": "node src/cli.js count",
+    "download": "node src/cli.js download",
+    "delete": "node src/cli.js delete",
+    "debug": "node src/cli.js debug",
+    "selfcheck": "node src/selfcheck.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "CC-BY-NC-SA-4.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Marfa/google-large-photo-revomer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Marfa/google-large-photo-revomer/issues"
+  },
+  "homepage": "https://github.com/Marfa/google-large-photo-revomer#readme",
+  "dependencies": {
+    "playwright": "^1.61.1"
+  }
+}

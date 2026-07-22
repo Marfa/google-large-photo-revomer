@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Install once: git config core.hooksPath .githooks
+set -euo pipefail
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks protect --staged -v
+else
+  echo "gitleaks not installed; skip secret scan (brew install gitleaks)"
+fi

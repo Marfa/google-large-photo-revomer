@@ -1,0 +1,13 @@
+node_modules/
+.auth/
+downloads/
+*.log
+.DS_Store
+dist/
+.dist/
+debug-screenshot.png
+.env
+config.json
+tokens.json
+.cursor/
+
