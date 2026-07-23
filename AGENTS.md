@@ -16,6 +16,12 @@ Rules for humans and AI assistants working in this repository.
 - Enable the local hook: `git config core.hooksPath .githooks` (runs `gitleaks protect` on commit when `gitleaks` is installed).
 - Before release, run `gitleaks detect --source . -v`.
 
+## Stale artifacts
+
+- After every commit, `.githooks/post-commit` runs `scripts/clean-stale-artifacts.sh`.
+- It deletes **non-source** junk older than **7 days**: `debug-screenshot.png`, `dist/`, `.dist/`, old files under `downloads/`, root `.DS_Store` / `*.log`.
+- Never delete `.auth/` or `src/` as “cleanup”.
+
 ## Scope
 
 - Do not expand scope beyond the task. Match existing code style in `src/`.

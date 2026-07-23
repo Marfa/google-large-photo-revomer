@@ -1,7 +1,7 @@
 {
-  "name": "google-large-photos-cli",
+  "name": "google-large-photos-remover",
   "version": "1.0.0",
-  "description": "CLI to count, download, or delete large Google Photos via one.google.com",
+  "description": "Google Large Photos Remover — count, download, or delete large Google Photos via one.google.com",
   "type": "module",
   "private": true,
   "bin": {

@@ -14,7 +14,7 @@ import {
 } from './large-photos.js';
 
 const HELP = `
-Google Large Photos CLI
+Google Large Photos Remover
 
   npm start              Interactive mode (recommended)
   npm run login          Sign in to Google

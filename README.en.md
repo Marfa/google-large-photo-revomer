@@ -1,4 +1,4 @@
-# Google Large Photos — download or delete large photos in batches
+# Google Large Photos Remover
 
 A Node.js + Playwright CLI that opens Google One’s [large photos and videos](https://one.google.com/storage/management/photos/large) page, counts items, then **downloads** or **deletes** them in batches of 100.
 

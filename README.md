@@ -1,4 +1,4 @@
-# Google Large Photos — скачать или удалить тяжёлые фото пачками
+# Google Large Photos Remover
 
 CLI на Node.js + Playwright: открывает [раздел «Фото и видео большого размера»](https://one.google.com/storage/management/photos/large) в Google One, считает объекты и **скачивает** или **удаляет** их пакетами по 100.
 

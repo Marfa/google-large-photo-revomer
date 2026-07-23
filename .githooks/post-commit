@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# After each commit: drop stale build/debug artifacts (>7 days).
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+"$ROOT/scripts/clean-stale-artifacts.sh"
