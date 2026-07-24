@@ -7,6 +7,9 @@ const ru = {
   yesNo: 'Напишите Да или Нет: ',
   cancelled: 'Отменено.',
   openingBrowser: 'Открываю браузер…',
+  installingBrowser: 'Браузер Playwright не найден. Устанавливаю Chromium (нужен интернет, ~170 МБ)…',
+  installBrowserFailed:
+    'Не удалось установить Chromium. Выполните вручную: npx playwright install chromium',
   sessionFound: 'Сессия найдена в .auth/',
   enterAfterLogin: 'Нажмите Enter после входа… ',
   loginFailed: 'Вход не выполнен. Попробуйте снова.',
@@ -62,6 +65,9 @@ const en = {
   yesNo: 'Type Yes or No: ',
   cancelled: 'Cancelled.',
   openingBrowser: 'Opening browser…',
+  installingBrowser: 'Playwright browser not found. Installing Chromium (needs network, ~170 MB)…',
+  installBrowserFailed:
+    'Could not install Chromium. Run manually: npx playwright install chromium',
   sessionFound: 'Session found in .auth/',
   enterAfterLogin: 'Press Enter after signing in… ',
   loginFailed: 'Login not completed. Try again.',

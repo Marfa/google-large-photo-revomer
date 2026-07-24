@@ -1,5 +1,6 @@
 // src/selfcheck.js
 import assert from 'node:assert/strict';
+import { isChromiumInstalled } from './browser.js';
 import { chunk, parseSizeBytes, formatBytes, safeFileName } from './util.js';
 
 function testChunk() {
@@ -36,8 +37,13 @@ function testSafeFileName() {
   assert.ok(safeFileName('').length > 0);
 }
 
+function testIsChromiumInstalled() {
+  assert.equal(typeof isChromiumInstalled(), 'boolean');
+}
+
 testChunk();
 testParseSize();
 testFormatBytes();
 testSafeFileName();
+testIsChromiumInstalled();
 console.log('selfcheck: ok');
