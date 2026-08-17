@@ -29,6 +29,6 @@
   },
   "homepage": "https://github.com/Marfa/google-large-photo-revomer#readme",
   "dependencies": {
-    "playwright": "^1.61.1"
+    "playwright": "^1.62.1"
   }
 }
