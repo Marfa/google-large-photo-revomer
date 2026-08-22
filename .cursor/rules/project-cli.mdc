@@ -1,0 +1,17 @@
+---
+description: Domain rules for this Node.js + Playwright Google Large Photos CLI
+alwaysApply: true
+---
+
+# Google Large Photos Remover
+
+Node.js 20+ ESM CLI. Automates Google One web UI via Playwright — not official Google APIs.
+
+## Invariants
+
+- Prefer Node built-ins and already-installed `playwright`. Check `npm view <name> version` before adding a package; run `npm audit` after installs.
+- Never commit `.auth/`, `.env`, cookies, tokens, or credential files. Session lives in `.auth/` via `launchPersistentContext`.
+- Destructive actions (delete) require explicit user confirmation; do not soften or skip prompts.
+- Match existing style in `src/`: ESM imports, JSDoc on exports, early returns, 2-space indent, path comment at top of files.
+- Official Photos/Drive APIs are out of scope. UI selectors may break when Google changes the page — prefer resilient role/text locators and reuse helpers in `src/`.
+- After commits, stale artifacts cleanup runs via `.githooks/post-commit` (see `stale-artifacts` rule).

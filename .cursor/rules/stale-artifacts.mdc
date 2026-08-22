@@ -1,0 +1,34 @@
+---
+description: After every commit, remove stale build/debug artifacts older than 7 days
+alwaysApply: true
+---
+
+# Stale artifact cleanup
+
+After every git commit in this repo, stale non-source artifacts older than **7 days** must be removed.
+
+## What counts as an artifact
+
+- `debug-screenshot.png`
+- `dist/`, `.dist/`
+- contents of `downloads/`
+- root `.DS_Store`, root `*.log`
+
+## What must NOT be deleted
+
+- `src/`, docs, config, hooks, workflows
+- `.auth/` (browser session)
+- `node_modules/` (reinstall with `npm install` if needed)
+- `.git/`
+
+## How
+
+Hook: `.githooks/post-commit` → `scripts/clean-stale-artifacts.sh`
+
+Ensure hooks are enabled:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+If the agent creates commits, confirm the post-commit hook ran (or run `scripts/clean-stale-artifacts.sh` manually after commit).

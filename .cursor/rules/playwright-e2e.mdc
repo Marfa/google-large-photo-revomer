@@ -1,0 +1,22 @@
+---
+description: Playwright UI automation for Google One (adapted from awesome-cursorrules playwright-e2e)
+globs: src/**/*.js
+alwaysApply: false
+---
+
+# Playwright browser automation
+
+This project uses Playwright to drive the Google One large-photos UI — not `@playwright/test` E2E suites for our own app.
+
+## Practices (from awesome-cursorrules Playwright E2E, adapted)
+
+- Prefer role/text/semantic locators over brittle CSS/XPath tied to Google's internal class names.
+- Rely on Playwright auto-waiting; avoid fixed `sleep` unless debugging UI flakes.
+- Reuse helpers in `src/browser.js`, `src/large-photos.js`, `src/page-collect.js` — do not fork parallel browser launch paths.
+- Keep Chromium via `launchPersistentContext` into `.auth/`; do not invent a second session store.
+- Official Google Photos APIs are out of scope.
+- When Google changes the UI, fix selectors in one place and run `npm run selfcheck` / the affected command path.
+
+## Language
+
+Plain ESM JavaScript (no TypeScript in this repo). Match existing async/await and JSDoc style.

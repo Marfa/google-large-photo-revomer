@@ -1,0 +1,32 @@
+---
+description: Secure coding for this CLI — secrets, .auth/, deps, audit (awesome-cursorrules + project)
+globs: "**/*.{js,mjs,cjs,sh}"
+alwaysApply: true
+---
+
+# DevSecOps + AppSec (adapted)
+
+Source: [awesome-cursorrules security-devsecops](https://github.com/PatrickJS/awesome-cursorrules).
+
+## Secrets & session
+
+- Never hardcode secrets, credentials, or API keys.
+- Never commit `.auth/`, `.env`, cookies, tokens, or credential files.
+- Never log session tokens, cookies, or auth paths with secrets.
+- Enable `git config core.hooksPath .githooks` (gitleaks on commit when installed).
+
+## Dependencies
+
+- Prefer Node built-ins and already-installed packages; do not add deps without need.
+- Before adding a package: `npm view <name> version`. After install/bump: `npm audit`.
+- CI fails on `npm audit --audit-level=high` — treat as a gate.
+
+## Input & destructive actions
+
+- Validate CLI args and interactive answers at trust boundaries.
+- Delete/download flows need explicit confirmation; do not bypass prompts.
+- Prefer Playwright locators over `page.evaluate` with untrusted strings; avoid `eval` / shell `exec` of user input.
+
+## Scope note
+
+Database/RBAC/WAF sections from the upstream rule do not apply — this is a local Playwright CLI, not a server app.
