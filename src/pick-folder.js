@@ -13,10 +13,14 @@ const execFileAsync = promisify(execFile);
 export async function pickFolder(prompt = 'Выберите папку для скачивания') {
   if (process.platform === 'darwin') {
     try {
-      const safe = prompt.replace(/"/g, '\\"');
       const { stdout } = await execFileAsync('osascript', [
         '-e',
-        `POSIX path of (choose folder with prompt "${safe}")`,
+        'on run argv',
+        '-e',
+        'POSIX path of (choose folder with prompt (item 1 of argv))',
+        '-e',
+        'end run',
+        prompt,
       ]);
       const dir = stdout.trim();
       return dir || null;
