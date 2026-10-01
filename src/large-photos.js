@@ -849,7 +849,7 @@ async function deselectAll(page) {
 }
 
 /**
- * Click toolbar Delete, then confirm dialog (incl. 60-day agreement checkbox).
+ * Click toolbar Delete, then confirm dialog (incl. agreement checkbox).
  * @param {import('playwright').Page} page
  */
 async function clickDeleteAndConfirm(page) {
@@ -865,7 +865,7 @@ async function clickDeleteAndConfirm(page) {
   const dialog = page
     .locator('[role="dialog"], [role="alertdialog"]')
     .filter({
-      hasText: /корзин|trash|bin|переместить|удалить|delete|60/i,
+      hasText: /корзин|trash|bin|переместить|удалить|delete|\d+\s*дн|\d+\s*day/i,
     })
     .first();
 
@@ -877,33 +877,35 @@ async function clickDeleteAndConfirm(page) {
     return true;
   }
 
-  // Required: «Я соглашаюсь… удалены навсегда через 60 дней»
-  const agreeLabel = dialog.getByText(
-    /соглашаюсь|agree|60\s*дн|permanently deleted after/i,
-  );
+  // Google One: «Я понимаю… удалены навсегда через 30 дн.» (wording/days vary).
+  // Checkbox lives in div.KGC9Kd-MPu53c; label click is the most reliable toggle.
+  const agreeLabel = dialog
+    .locator('label')
+    .filter({
+      hasText:
+        /понимаю|соглашаюсь|i understand|i agree|agree that|\d+\s*дн|permanently deleted|\d+\s*days/i,
+    })
+    .first();
+  const agreeBox = dialog.locator('div.KGC9Kd-MPu53c').first();
+  const agreeInput = dialog.locator('input[type="checkbox"]').first();
+
   if ((await agreeLabel.count()) > 0) {
-    const cb = dialog.locator(
-      'div.KGC9Kd-MPu53c, input[type="checkbox"], [role="checkbox"]',
+    await agreeLabel.click({ timeout: 5000 });
+  } else if ((await agreeBox.count()) > 0) {
+    await agreeBox.click({ timeout: 5000, force: true });
+  } else if ((await agreeInput.count()) > 0) {
+    await agreeInput.check({ timeout: 5000, force: true }).catch(async () => {
+      await agreeInput.click({ timeout: 5000, force: true });
+    });
+  } else {
+    const agreeText = dialog.getByText(
+      /понимаю|соглашаюсь|i understand|i agree|\d+\s*дн|permanently deleted|\d+\s*days/i,
     );
-    if ((await cb.count()) > 0) {
-      const box = cb.first();
-      const checked = await box
-        .evaluate((node) => {
-          if (node instanceof HTMLInputElement) return node.checked;
-          const inner = node.querySelector('input[type="checkbox"]');
-          if (inner) return /** @type {HTMLInputElement} */ (inner).checked;
-          return node.getAttribute('aria-checked') === 'true';
-        })
-        .catch(() => false);
-      if (!checked) {
-        await box.click({ timeout: 5000, force: true });
-        await sleep(300);
-      }
-    } else {
-      await agreeLabel.first().click({ timeout: 5000 }).catch(() => {});
-      await sleep(300);
+    if ((await agreeText.count()) > 0) {
+      await agreeText.first().click({ timeout: 5000 }).catch(() => {});
     }
   }
+  await sleep(400);
 
   const confirm = dialog.getByRole('button', {
     name: /удалить|delete|move to (bin|trash)|в корзину|переместить в корзину/i,
@@ -916,6 +918,34 @@ async function clickDeleteAndConfirm(page) {
   if ((await confirmBtn.count()) === 0) {
     throw new Error(
       'В диалоге подтверждения не найдена кнопка «Удалить». Отметьте согласие вручную и сообщите об ошибке.',
+    );
+  }
+
+  // Wait until agreement enables the confirm button (do not re-toggle if already checked).
+  const deadline = Date.now() + 15_000;
+  while (Date.now() < deadline) {
+    const enabled = await confirmBtn
+      .evaluate((el) => !el.disabled && el.getAttribute('aria-disabled') !== 'true')
+      .catch(() => false);
+    if (enabled) break;
+
+    const checked = await agreeInput.isChecked().catch(() => false);
+    if (!checked) {
+      if ((await agreeLabel.count()) > 0) {
+        await agreeLabel.click({ timeout: 3000 }).catch(() => {});
+      } else if ((await agreeBox.count()) > 0) {
+        await agreeBox.click({ timeout: 3000, force: true }).catch(() => {});
+      }
+    }
+    await sleep(400);
+  }
+
+  const stillDisabled = await confirmBtn
+    .evaluate((el) => el.disabled || el.getAttribute('aria-disabled') === 'true')
+    .catch(() => true);
+  if (stillDisabled) {
+    throw new Error(
+      'Кнопка «Удалить» осталась неактивной — не удалось отметить «Я понимаю…». Отметьте галочку вручную и сообщите об ошибке.',
     );
   }
 

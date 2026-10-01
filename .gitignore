@@ -6,6 +6,9 @@ downloads/
 dist/
 .dist/
 debug-screenshot.png
+debug-delete-dialog.html
+debug-delete-dialog.json
+debug-delete-dialog.png
 .env
 config.json
 tokens.json

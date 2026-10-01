@@ -5,7 +5,7 @@ A Node.js + Playwright CLI that opens Google One’s [large photos and videos](h
 [Русская версия / Russian README](README.md)
 
 ```bash
-npm install && npx playwright install chromium && npm start
+npm install && npm start
 ```
 
 | Feature | What it does |
@@ -27,9 +27,10 @@ npm install && npx playwright install chromium && npm start
 git clone https://github.com/Marfa/google-large-photo-revomer.git
 cd google-large-photo-revomer
 npm install
-npx playwright install chromium
 npm start
 ```
+
+On first run the CLI downloads Chromium only (~170 MB), without ffmpeg or headless-shell.
 
 1. Pick a language (defaults to the system locale).
 2. Confirm sign-in — Chromium opens; sign in to Google if needed.
@@ -56,7 +57,7 @@ Do not close the browser window while the script is running.
 
 ## Notes
 
-- Deleted items go to **Google Photos trash** and are permanently removed after about **60 days**.
+- Deleted items go to **Google Photos trash** and are permanently removed after about **30 days**.
 - `.auth/` holds the browser session — **do not commit** it (listed in `.gitignore`).
 - Google One UI changes; if selectors break, update `src/large-photos.js`.
 - Unofficial tool; not affiliated with or supported by Google. Use at your own risk.

@@ -25,18 +25,32 @@ export function isChromiumInstalled() {
 }
 
 /**
- * Download Playwright Chromium if the local browser binary is missing.
+ * Download Playwright Chromium only (no ffmpeg / headless-shell).
+ * Official `playwright install chromium` also pulls those; this CLI does not need them.
  */
-export function ensureChromiumInstalled() {
+export async function ensureChromiumInstalled() {
   if (isChromiumInstalled()) return;
   const l = t();
   console.log(l.installingBrowser);
   const require = createRequire(import.meta.url);
-  const cli = require.resolve('playwright/cli.js');
-  const result = spawnSync(process.execPath, [cli, 'install', 'chromium'], {
-    stdio: 'inherit',
-  });
-  if (result.status !== 0 || !isChromiumInstalled()) {
+  try {
+    const { registry: reg } = require('playwright-core/lib/coreBundle');
+    const exe = reg.registry.findExecutable('chromium');
+    if (!exe?._install) throw new Error('chromium executable missing');
+    await reg.registry.install([exe]);
+  } catch {
+    // Fallback: CLI still works, but also downloads ffmpeg (+ headless-shell unless --no-shell).
+    const cli = require.resolve('playwright/cli.js');
+    const result = spawnSync(
+      process.execPath,
+      [cli, 'install', 'chromium', '--no-shell'],
+      { stdio: 'inherit' },
+    );
+    if (result.status !== 0) {
+      throw new Error(l.installBrowserFailed);
+    }
+  }
+  if (!isChromiumInstalled()) {
     throw new Error(l.installBrowserFailed);
   }
 }
@@ -46,7 +60,7 @@ export function ensureChromiumInstalled() {
  * @param {{ headless?: boolean }} [options]
  */
 export async function openBrowser(options = {}) {
-  ensureChromiumInstalled();
+  await ensureChromiumInstalled();
   const headless = options.headless === true;
   const context = await chromium.launchPersistentContext(AUTH_DIR, {
     headless,
