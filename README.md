@@ -5,7 +5,7 @@ CLI на Node.js + Playwright: открывает [раздел «Фото и в
 [English README](README.en.md)
 
 ```bash
-npm install && npx playwright install chromium && npm start
+npm install && npm start
 ```
 
 | Возможность | Что делает |
@@ -27,9 +27,10 @@ npm install && npx playwright install chromium && npm start
 git clone https://github.com/Marfa/google-large-photo-revomer.git
 cd google-large-photo-revomer
 npm install
-npx playwright install chromium
 npm start
 ```
+
+При первом запуске CLI сам скачает только Chromium (~170 МБ), без ffmpeg и headless-shell.
 
 1. Выберите язык (по умолчанию — язык системы).
 2. Подтвердите вход — откроется Chromium; войдите в Google, если нужно.
@@ -56,7 +57,7 @@ npm start
 
 ## Важно
 
-- Удалённые объекты попадают в **корзину Google Фото** и удаляются навсегда примерно через **60 дней**.
+- Удалённые объекты попадают в **корзину Google Фото** и удаляются навсегда примерно через **30 дней**.
 - Каталог `.auth/` содержит сессию браузера — **не коммитьте** его (уже в `.gitignore`).
 - UI Google One меняется; при поломке смотрите селекторы в `src/large-photos.js`.
 - Это неофициальный инструмент; Google его не поддерживает. Используйте на свой риск.

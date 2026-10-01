@@ -7,9 +7,10 @@ const ru = {
   yesNo: 'Напишите Да или Нет: ',
   cancelled: 'Отменено.',
   openingBrowser: 'Открываю браузер…',
-  installingBrowser: 'Браузер Playwright не найден. Устанавливаю Chromium (нужен интернет, ~170 МБ)…',
+  installingBrowser:
+    'Браузер Playwright не найден. Устанавливаю Chromium (нужен интернет, ~170 МБ; без ffmpeg)…',
   installBrowserFailed:
-    'Не удалось установить Chromium. Выполните вручную: npx playwright install chromium',
+    'Не удалось установить Chromium. Повторите запуск со сетью или выполните: npx playwright install chromium --no-shell',
   sessionFound: 'Сессия найдена в .auth/',
   enterAfterLogin: 'Нажмите Enter после входа… ',
   loginFailed: 'Вход не выполнен. Попробуйте снова.',
@@ -38,7 +39,7 @@ const ru = {
   downloadDone: (batches, obj, files) =>
     `\nГотово. Пакетов: ${batches}, скачано объектов: ${obj}, файлов: ${files}`,
   willDelete: (n) => `\nБудет удалено ${n} фотографий.`,
-  deleteConfirm: 'Вы действительно хотите удалить их? Объекты в корзине Google Фото будут удалены навсегда через 60 дней.',
+  deleteConfirm: 'Вы действительно хотите удалить их? Объекты в корзине Google Фото будут удалены навсегда через 30 дней.',
   deleteCancelled: 'Удаление отменено.',
   deleting: (n) => `Удаление ${n} файл(ов) пакетами по 100…`,
   deleteBatch: (batch, sel, total, exp) =>
@@ -65,9 +66,10 @@ const en = {
   yesNo: 'Type Yes or No: ',
   cancelled: 'Cancelled.',
   openingBrowser: 'Opening browser…',
-  installingBrowser: 'Playwright browser not found. Installing Chromium (needs network, ~170 MB)…',
+  installingBrowser:
+    'Playwright browser not found. Installing Chromium (needs network, ~170 MB; no ffmpeg)…',
   installBrowserFailed:
-    'Could not install Chromium. Run manually: npx playwright install chromium',
+    'Could not install Chromium. Retry online or run: npx playwright install chromium --no-shell',
   sessionFound: 'Session found in .auth/',
   enterAfterLogin: 'Press Enter after signing in… ',
   loginFailed: 'Login not completed. Try again.',
@@ -96,7 +98,7 @@ const en = {
   downloadDone: (batches, obj, files) =>
     `\nDone. Batches: ${batches}, objects downloaded: ${obj}, files saved: ${files}`,
   willDelete: (n) => `\n${n} photos will be deleted.`,
-  deleteConfirm: 'Are you sure? Items in Google Photos trash will be permanently deleted after 60 days.',
+  deleteConfirm: 'Are you sure? Items in Google Photos trash will be permanently deleted after 30 days.',
   deleteCancelled: 'Deletion cancelled.',
   deleting: (n) => `Deleting ${n} file(s) in batches of 100…`,
   deleteBatch: (batch, sel, total, exp) =>
